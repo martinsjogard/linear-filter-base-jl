@@ -1,7 +1,7 @@
 using FFTW
 using DSP
 
-function prepare_cosine_filter(opt::Dict, T::Int, Fs::Real)
+function msfun_prepare_cosine_filter(opt::Dict, T::Int, Fs::Real)
     # Apply the specified window function
     win_func = getproperty(DSP, Symbol(opt["win"]))
     win = win_func(T)
