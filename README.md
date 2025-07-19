@@ -149,6 +149,7 @@ Each script is written as a standalone function in Julia and can be imported or 
 ```julia
 include("sig_filter.jl")
 filtered = sig_filter(data, sfreq, cfg)
+```
 
 ## Dependencies
 Julia 1.9+
