@@ -1,8 +1,8 @@
 using FFTW
 
-function msfun_sig_analytic(X::AbstractArray, dim::Int = ndims(X))
+function msfun_filt_getanalytic(X::AbstractArray, dim::Int = ndims(X))
     if !(eltype(X) <: Real)
-        @warn "msfun_sig_analytic - Input is not real. Using real part only."
+        @warn "msfun_filt_getanalytic - Input is not real. Using real part only."
         X = real(X)
     end
 
