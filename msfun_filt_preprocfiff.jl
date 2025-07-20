@@ -1,6 +1,6 @@
 using FFTW, Statistics
 
-function msfun_sig_preprocess_fiff(raw::Dict, times::AbstractArray, cfg::Dict)
+function msfun_filt_preprocfiff(raw::Dict, times::AbstractArray, cfg::Dict)
     if !haskey(cfg, "chans")
         error("cfg must contain a list of channels as 'chans'")
     end
@@ -19,14 +19,14 @@ function msfun_sig_preprocess_fiff(raw::Dict, times::AbstractArray, cfg::Dict)
     )
 
     if isempty(chan_inds)
-        println("msfun_sig_preprocess_fiff - WARNING: No channels read... Returning empty output.")
+        println("msfun_filt_preprocfiff - WARNING: No channels read... Returning empty output.")
         return zeros(0, size(times, 2)), cfg
     end
 
-    println("msfun_sig_preprocess_fiff - Reading data...")
+    println("msfun_filt_preprocfiff - Reading data...")
     sig = raw["data"][chan_inds, :]
 
-    println("msfun_sig_preprocess_fiff - Getting the right time samples...")
+    println("msfun_filt_preprocfiff - Getting the right time samples...")
     sfreq = raw["sfreq"]
     T = round.(Int, times .* sfreq) .- raw["first_samp"]
 
@@ -42,7 +42,7 @@ function msfun_sig_preprocess_fiff(raw::Dict, times::AbstractArray, cfg::Dict)
     end
 
     if get(cfg, "filter", false)
-        println("msfun_sig_preprocess_fiff - Filtering data...")
+        println("msfun_filt_preprocfiff - Filtering data...")
         if ndims(sig) == 2
             win, F = msfun_prepare_cosine_filter(cfg["filt"], size(sig, 2), sfreq)
             Fsig = fft(sig .* win', 2)
@@ -58,7 +58,7 @@ function msfun_sig_preprocess_fiff(raw::Dict, times::AbstractArray, cfg::Dict)
     end
 
     if get(cfg, "blc", false)
-        println("msfun_sig_preprocess_fiff - Applying baseline correction...")
+        println("msfun_filt_preprocfiff - Applying baseline correction...")
         if ndims(sig) == 2
             n = findall(diff(round.(Int, sfreq .* times)) .> 1)
             n = vcat(0, n, size(times, 2))
@@ -74,6 +74,6 @@ function msfun_sig_preprocess_fiff(raw::Dict, times::AbstractArray, cfg::Dict)
         end
     end
 
-    println("msfun_sig_preprocess_fiff - Data preprocessed and ready.")
+    println("msfun_filt_preprocfiff - Data preprocessed and ready.")
     return sig, cfg
 end
