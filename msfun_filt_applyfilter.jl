@@ -1,7 +1,7 @@
-include("msfun_prepare_cosine_filter.jl")
+include("msfun_filt_preparecosine.jl")
 using FFTW
 
-function msfun_sig_filter(sig::Array{<:Real}, cfg::Dict)
+function msfun_filt_applyfilter(sig::Array{<:Real}, cfg::Dict)
     if !haskey(cfg, "sfreq") || !haskey(cfg, "filt")
         error("cfg must contain 'sfreq' and 'filt'")
     end
@@ -21,7 +21,7 @@ function msfun_sig_filter(sig::Array{<:Real}, cfg::Dict)
         )
         band = lowercase(filt_cfg)
         if band == "none"
-            println("msfun_sig_filter - No filter applied... Just copying data.")
+            println("msfun_filt_applyfilter - No filter applied... Just copying data.")
             return copy(sig)
         elseif haskey(default_filters, band)
             filt_cfg = default_filters[band]
@@ -33,10 +33,10 @@ function msfun_sig_filter(sig::Array{<:Real}, cfg::Dict)
     sfreq = cfg["sfreq"]
     sig_filt = copy(sig)
 
-    println("msfun_sig_filter - Filtering data...")
+    println("msfun_filt_applyfilter - Filtering data...")
     if ndims(sig) == 2
         n_ch, T = size(sig)
-        win, F = msfun_prepare_cosine_filter(filt_cfg, T, sfreq)
+        win, F = msfun_filt_preparecosine(filt_cfg, T, sfreq)
         win = reshape(win, 1, :)
         F = reshape(F, 1, :)
         Fsig = fft(sig .* win, 2)
@@ -44,7 +44,7 @@ function msfun_sig_filter(sig::Array{<:Real}, cfg::Dict)
 
     elseif ndims(sig) == 3
         n_epochs, n_ch, T = size(sig)
-        win, F = msfun_prepare_cosine_filter(filt_cfg, T, sfreq)
+        win, F = msfun_filt_preparecosine(filt_cfg, T, sfreq)
         for k in 1:n_epochs
             epoch = sig[k, :, :]
             Fsig = fft(epoch .* reshape(win, 1, :), 2)
@@ -54,6 +54,6 @@ function msfun_sig_filter(sig::Array{<:Real}, cfg::Dict)
         error("Input must be 2D or 3D")
     end
 
-    println("msfun_sig_filter - Filtered data ready.")
+    println("msfun_filt_applyfilter - Filtered data ready.")
     return sig_filt
 end
