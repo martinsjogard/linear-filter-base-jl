@@ -1,4 +1,4 @@
-function msfun_prepare_cosine_filter(opt::Dict, T::Int, Fs::Float64)
+function msfun_filt_preparecosine(opt::Dict, T::Int, Fs::Float64)
     # Generate time-domain window
     win = ones(Float64, T)
     if opt["win"] == "hann"
