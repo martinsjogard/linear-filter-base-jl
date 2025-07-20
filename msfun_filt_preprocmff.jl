@@ -1,6 +1,6 @@
 using FFTW, Statistics
 
-function msfun_sig_preprocess_mff(times::AbstractArray, sfreq::Real, cfg::Dict)
+function msfun_filt_preprocmff(times::AbstractArray, sfreq::Real, cfg::Dict)
     if !haskey(cfg, "chans") || !haskey(cfg, "mff_data")
         error("cfg must include 'mff_data' and 'chans'")
     end
@@ -71,6 +71,6 @@ function msfun_sig_preprocess_mff(times::AbstractArray, sfreq::Real, cfg::Dict)
         end
     end
 
-    println("msfun_sig_preprocess_mff - Data preprocessed and ready.")
+    println("msfun_filt_preprocmff - Data preprocessed and ready.")
     return sig, cfg
 end
