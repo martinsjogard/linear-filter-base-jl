@@ -1,4 +1,4 @@
-function msfun_sig_concat_epoch(sig::AbstractArray, L::Int; mode::String = "")
+function msfun_filt_concatenate(sig::AbstractArray, L::Int; mode::String = "")
     if ndims(sig) == 2 && isempty(mode)
         mode = "epochlength"
     elseif ndims(sig) == 3 && isempty(mode)
