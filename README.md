@@ -21,7 +21,7 @@ This package provides modular, flexible functions for:
 
 ## Functions
 
-### `msfun_prepare_cosine_filter.jl`
+### `msfun_filt_preparecosine.jl`
 **Purpose:** Prepares a cosine taper filter in the frequency domain.  
 **Inputs:** 
 - `cfg`: A dictionary with filter type, window function, frequencies, and width.
@@ -33,7 +33,7 @@ This package provides modular, flexible functions for:
 
 ---
 
-### `msfun_sig_filter.jl`
+### `msfun_filt_applyfilter.jl`
 **Purpose:** Applies a cosine filter to continuous or epoched data.  
 **Inputs:** 
 - `X`: Signal (2D or 3D array)
@@ -44,7 +44,7 @@ This package provides modular, flexible functions for:
 
 ---
 
-### `msfun_sig_spectrum.jl`
+### `msfun_filt_computespectrum.jl`
 **Purpose:** Computes spectral power for input signal.  
 **Inputs:** 
 - `X`: Signal (2D or 3D array)
@@ -56,7 +56,7 @@ This package provides modular, flexible functions for:
 
 ---
 
-### `msfun_sig_slow_modulation.jl`
+### `msfun_filt_slowmodulation.jl`
 **Purpose:** Removes fast oscillations to extract slow amplitude/phase modulations from narrowband analytic signal.  
 **Inputs:** 
 - `Z`: Analytic or real-valued signal (2D or 3D)
@@ -66,7 +66,7 @@ This package provides modular, flexible functions for:
 
 ---
 
-### `msfun_sig_downsample.jl`
+### `msfun_filt_downsample.jl`
 **Purpose:** Downsamples a signal along its time dimension.  
 **Inputs:** 
 - `X`: Signal (2D or 3D array)
@@ -76,7 +76,7 @@ This package provides modular, flexible functions for:
 
 ---
 
-### `msfun_sig_concat_epoch.jl`
+### `msfun_filt_concatenate.jl`
 **Purpose:** Concatenates or epochs signal depending on input format and parameters.  
 **Inputs:** 
 - `sig`: Input data (2D or 3D)
@@ -87,7 +87,7 @@ This package provides modular, flexible functions for:
 
 ---
 
-### `msfun_sig_inst_orth.jl`
+### `msfunfilt_orthogonalize.jl`
 **Purpose:** Removes instantaneous linear component of `X` predicted by `Y` (complex-valued signals).  
 **Inputs:** 
 - `X`: Target signal (complex)
@@ -97,7 +97,7 @@ This package provides modular, flexible functions for:
 
 ---
 
-### `msfun_sig_analytic.jl`
+### `msfun_filt_getanalytic.jl`
 **Purpose:** Computes the analytic signal using the Hilbert transform along a given dimension.  
 **Inputs:** 
 - `X`: Real-valued signal
@@ -107,7 +107,7 @@ This package provides modular, flexible functions for:
 
 ---
 
-### `msfun_sig_leakcorr.jl`
+### `msfun_filt_removeleakage.jl`
 **Purpose:** Removes signal leakage using various orthogonalization or regression methods.  
 **Inputs:** 
 - `X`: Signal to be corrected
@@ -118,7 +118,7 @@ This package provides modular, flexible functions for:
 
 ---
 
-### `sig_preprocess_fiff.jl`
+### `sig_filt_preprocfiff.jl`
 **Purpose:** Reads and preprocesses signals from a FIFF file (MNE format).  
 **Inputs:** 
 - `raw`: FIFF raw data structure
@@ -130,7 +130,7 @@ This package provides modular, flexible functions for:
 
 ---
 
-### `msfun_sig_preprocess_mff.jl`
+### `msfun_filt_preprocmff.jl`
 **Purpose:** Reads and preprocesses signals from an MFF file (EGI format) using FieldTrip.  
 **Inputs:** 
 - `times`: Array of time windows
@@ -147,12 +147,12 @@ This package provides modular, flexible functions for:
 Each script is written as a standalone function in Julia and can be imported or included in your own data analysis workflows. For example:
 
 ```julia
-include("msfun_sig_filter.jl")
-filtered = msfun_sig_filter(data, sfreq, cfg)
+include("msfun_filt_applyfilter.jl")
+filtered = msfun_filt_applyfilter(data, sfreq, cfg)
 ```
 
 ## Dependencies
 Julia 1.9+
 FFTW.jl
-For msfun_sig_preprocess_mff.jl: FieldTrip must be accessible via MAT.jl or equivalent wrapper
-For msfun_sig_preprocess_fiff.jl: MNE-compatible .fif file reader if used
+For msfun_filt_preprocmff.jl: FieldTrip must be accessible via MAT.jl or equivalent wrapper
+For msfun_filt_preprocfiff.jl: MNE-compatible .fif file reader if used
