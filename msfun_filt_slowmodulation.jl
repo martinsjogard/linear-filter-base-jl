@@ -1,6 +1,6 @@
 using FFTW
 
-function msfun_sig_slow_modulation(Z::AbstractArray, fcenter::Int)
+function msfun_filt_slowmodulation(Z::AbstractArray, fcenter::Int)
     if ndims(Z) != 2 && ndims(Z) != 3
         error("Z must be a 2D or 3D array")
     end
@@ -9,7 +9,7 @@ function msfun_sig_slow_modulation(Z::AbstractArray, fcenter::Int)
     isanalytic = eltype(Z) <: Complex
 
     if !isanalytic
-        Z = msfun_sig_analytic(Z, ndims(Z))
+        Z = msfun_filt_getanalytic(Z, ndims(Z))
     end
 
     phase_wave = exp.(2π * im * (fcenter - 1) * (0:T-1) ./ T)
