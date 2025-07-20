@@ -1,6 +1,6 @@
 using FFTW, Statistics
 
-function msfun_sig_spectrum(sig::AbstractArray, cfg::Dict)
+function msfun_filt_computespectrum(sig::AbstractArray, cfg::Dict)
     if !haskey(cfg, "sfreq")
         error("cfg must include key 'sfreq'")
     end
@@ -37,7 +37,7 @@ function msfun_sig_spectrum(sig::AbstractArray, cfg::Dict)
 
     if average && ndims(sig) == 3
         if cfg_type == "fourier"
-            @warn "msfun_sig_spectrum - Averaging Fourier coefficients is unusual..."
+            @warn "msfun_filt_computespectrum - Averaging Fourier coefficients is unusual..."
         end
         Ssig = mean(Ssig, dims=1)
         Ssig = dropdims(Ssig, dims=1)
