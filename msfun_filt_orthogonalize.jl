@@ -1,4 +1,4 @@
-function msfun_sig_inst_orth(X::AbstractMatrix{ComplexF64}, Y::AbstractMatrix{ComplexF64})
+function msfun_filt_orthogonalize(X::AbstractMatrix{ComplexF64}, Y::AbstractMatrix{ComplexF64})
     if size(X, 2) != size(Y, 2)
         error("X and Y must have the same number of time samples (columns)")
     end
