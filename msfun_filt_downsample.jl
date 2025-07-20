@@ -1,6 +1,6 @@
 using Statistics
 
-function msfun_sig_downsample(sig::AbstractArray, cfg::Dict)
+function msfun_filt_downsample(sig::AbstractArray, cfg::Dict)
     if ndims(sig) == 2
         K = 1
         C, T = size(sig)
@@ -17,7 +17,7 @@ function msfun_sig_downsample(sig::AbstractArray, cfg::Dict)
 
     N = sfreq / downsfreq
     if N % 1 != 0
-        println("msfun_sig_downsample - WARNING: sfreq/downsfreq not integer, rounding")
+        println("msfun_filt_downsample - WARNING: sfreq/downsfreq not integer, rounding")
         N = round(Int, N)
         downsfreq = sfreq / N
         println("New downsampling frequency: ", downsfreq)
