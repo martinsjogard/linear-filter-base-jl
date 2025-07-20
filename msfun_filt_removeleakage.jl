@@ -1,4 +1,4 @@
-function msfun_sig_leakcorr(X::AbstractArray, Y::AbstractArray, cfg::Dict)
+function msfun_filt_removeleakage(X::AbstractArray, Y::AbstractArray, cfg::Dict)
     if ndims(X) != 2 || ndims(Y) != 2 || size(X, 2) != size(Y, 2)
         error("X and Y must be 2D arrays with matching time dimension")
     end
